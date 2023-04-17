@@ -1,0 +1,9 @@
+---
+name: VSCode
+category: Interactive Apps
+subcategory: Servers
+role: batch_connect
+description: |
+  This app will launch [VS Code] on an Alvis compute node
+
+  [VS Code]: https://code.visualstudio.com/

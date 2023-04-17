@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# Script called by OOD launching Code Server
+# Script requires that env variable CODESERVER_PASSWORD is 
+# set beforehand.
+
+set -x
+
+# Function get_available_port only used for local testing
+# i.e. without the pre-defined functions available from OOD
+get_available_port()
+{
+  local starting=8080
+  for i in $(seq 0 100); do
+    port=$((starting+i))
+    lsof -i :$port &>/dev/null || break
+  done
+  echo $port
+}
+
+# Code-server uses a password read from env $PASSWORD
+export PASSWORD="$CODESERVER_PASSWORD"
+
+CODESERVER_WORK_DIR="$HOME"
+if [[ -z "${CODESERVER_USER_DATA_DIR}" ]]; then
+  CODESERVER_USER_DATA_DIR="$HOME/.local/share/code-server"
+fi
+if [[ -z "${CODESERVER_EXTENSIONS_DIR}" ]]; then
+  CODESERVER_EXTENSIONS_DIR="$HOME/.vscode/extensions"
+fi
+
+mkdir -p "${CODESERVER_USER_DATA_DIR}" "${CODESERVER_EXTENSIONS_DIR}"
+
+# Benchmark info
+echo "TIMING - Starting main script at: $(date)"
+
+if [ "$1" = "debug" ]; then
+  port="$(get_available_port)"
+fi
+
+if [ "$1" = "debug" ]; then
+  echo "STARTING code-server"
+  echo "Listening on $port"
+fi
+
+module load code-server
+CODESERVER_EXEC="/apps/Common/software/code-server/4.9.1/bin/code-server"
+
+${CODESERVER_EXEC} \
+  --bind-addr 0.0.0.0:${port} \
+  --user-data-dir "${CODESERVER_USER_DATA_DIR}" \
+  --extensions-dir "${CODESERVER_EXTENSIONS_DIR}" \
+  --log debug \
+  --auth password \
+  --ignore-last-opened \
+  --disable-telemetry \
+  --disable-update-check \
+  "${CODESERVER_WORK_DIR}"
