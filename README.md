@@ -7,15 +7,15 @@ This app was inspired by the [OSC VS Code Server App](https://github.com/OSC/bc_
 
 ## Prerequisites
 
-This app is developed for Alvis OnDemand. It currently requires a module
-system with `code-server` module available as:
+This app is developed for Alvis OnDemand. It currently requires a `code-server`
+module available with:
 
 ```
 $ module load code-server
 ```
 
 Tested with:
-* VS Code Server >= XXXX
+* VS Code Server >= 4.9.1
 
 ## Install
 The app itself is self-contained and should only need to be placed as e.g.
