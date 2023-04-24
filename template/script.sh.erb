@@ -42,7 +42,12 @@ if [ "$1" = "debug" ]; then
   echo "Listening on $port"
 fi
 
-module load code-server
+if [[ -z "${CODESERVER_MODULE_VERSION}" ]]; then
+  module load code-server
+else
+  module load code-server/"${CODESERVER_MODULE_VERSION}"
+fi
+
 CODESERVER_EXEC="/apps/Common/software/code-server/4.9.1/bin/code-server"
 
 ${CODESERVER_EXEC} \

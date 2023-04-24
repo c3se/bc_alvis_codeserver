@@ -29,9 +29,12 @@ $ git clone https://github.com/c3se/bc_alvis_codeserver.git
 ## Customizations
 You can customize the user data directory and the extensions directory
 respectively by setting the following variables in
-`~/portal/vscode/vscode1.sh`
+`~/portal/vscode/vscode1.sh`.
+
+You can find configuration examples in `/apps/portal/vscode` on Alvis.
 
 ```
+$ CODESERVER_MODULE_VERSION= # See versions by running module spider code-server
 $ CODESERVER_USER_DATA_DIR=$HOME/my_codeserver_data
 $ CODESERVER_EXTENSIONS_DIR=$HOME/my_extensions
 ```
