@@ -53,9 +53,9 @@ if [[-z "${CODESERVER_CONTAINER}"]]; then
   CODESERVER_EXEC="code-server"
 else
   if [[ -n "${APPTAINER_FLAGS}" ]]; then
-    CODESERVER_EXEC="apptainer exec "${APPTAINER_FLAGS}" "${CODESERVER_CONTAINER}" code-server"
+    CODESERVER_EXEC="apptainer exec ${APPTAINER_FLAGS} ${CODESERVER_CONTAINER} code-server"
   else
-    CODESERVER_EXEC="apptainer exec "${CODESERVER_CONTAINER}" code-server"
+    CODESERVER_EXEC="apptainer exec ${CODESERVER_CONTAINER} code-server"
   fi
 fi
 
