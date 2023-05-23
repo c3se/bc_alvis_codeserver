@@ -20,7 +20,9 @@ get_available_port()
 # Code-server uses a password read from env $PASSWORD
 export PASSWORD="$CODESERVER_PASSWORD"
 
-CODESERVER_WORK_DIR="$HOME"
+if [[ -z "${CODESERVER_USER_DATA_DIR}"]]; then
+  CODESERVER_WORK_DIR="$HOME"
+fi
 if [[ -z "${CODESERVER_USER_DATA_DIR}" ]]; then
   CODESERVER_USER_DATA_DIR="$HOME/.local/share/code-server"
 fi
@@ -42,13 +44,21 @@ if [ "$1" = "debug" ]; then
   echo "Listening on $port"
 fi
 
-if [[ -z "${CODESERVER_MODULE_VERSION}" ]]; then
-  module load code-server
+if [[-z "${CODESERVER_CONTAINER}"]]; then
+  if [[ -z "${CODESERVER_MODULE_VERSION}" ]]; then
+    module load code-server
+  else
+    module load code-server/"${CODESERVER_MODULE_VERSION}"
+  fi
+  CODESERVER_EXEC="code-server"
 else
-  module load code-server/"${CODESERVER_MODULE_VERSION}"
+  if [[ -n "${APPTAINER_FLAGS}" ]]; then
+    CODESERVER_EXEC=apptainer exec "${APPTAINER_FLAGS}" "${CODESERVER_CONTAINER}" code-server
+  else
+    CODESERVER_EXEC=apptainer exec "${CODESERVER_CONTAINER}" code-server
+  fi
 fi
 
-CODESERVER_EXEC="/apps/Common/software/code-server/4.9.1/bin/code-server"
 
 ${CODESERVER_EXEC} \
   --bind-addr 0.0.0.0:${port} \
