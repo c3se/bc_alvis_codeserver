@@ -44,7 +44,7 @@ if [ "$1" = "debug" ]; then
   echo "Listening on $port"
 fi
 
-if [[-z "${CODESERVER_CONTAINER}" ]]; then
+if [[ -z "${CODESERVER_CONTAINER}" ]]; then
   if [[ -z "${CODESERVER_MODULE_VERSION}" ]]; then
     module load code-server
   else
