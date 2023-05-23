@@ -20,7 +20,7 @@ get_available_port()
 # Code-server uses a password read from env $PASSWORD
 export PASSWORD="$CODESERVER_PASSWORD"
 
-if [[ -z "${CODESERVER_USER_DATA_DIR}"]]; then
+if [[ -z "${CODESERVER_USER_DATA_DIR}" ]]; then
   CODESERVER_WORK_DIR="$HOME"
 fi
 if [[ -z "${CODESERVER_USER_DATA_DIR}" ]]; then
@@ -44,7 +44,7 @@ if [ "$1" = "debug" ]; then
   echo "Listening on $port"
 fi
 
-if [[-z "${CODESERVER_CONTAINER}"]]; then
+if [[-z "${CODESERVER_CONTAINER}" ]]; then
   if [[ -z "${CODESERVER_MODULE_VERSION}" ]]; then
     module load code-server
   else
